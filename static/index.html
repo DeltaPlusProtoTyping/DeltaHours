@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'" />
+    <title>DeltaHours</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>DeltaHours</h1>
+        <p class="tagline">Track billable hours per job — everything autosaves</p>
+      </div>
+      <div class="header-actions">
+        <span id="save-status">All changes saved</span>
+        <button id="settings-btn" title="Theme and app settings">⚙ Settings</button>
+      </div>
+    </header>
+
+    <main>
+      <aside id="sidebar">
+        <div class="sidebar-head">
+          <h2>Jobs</h2>
+          <button id="add-job" class="accent" title="Create a new job">+ New job</button>
+        </div>
+        <div id="job-list" aria-label="Jobs"></div>
+      </aside>
+
+      <section id="detail"></section>
+    </main>
+
+    <dialog id="job-dialog">
+      <form method="dialog" id="job-form">
+        <h2 id="job-dialog-title">New job</h2>
+        <label>Job name
+          <input id="job-name" type="text" required maxlength="80" placeholder="e.g. Smith kitchen remodel" />
+        </label>
+        <label>Hourly rate
+          <input id="job-rate" type="number" min="0" step="0.01" value="0" required />
+        </label>
+        <label>Color
+          <div id="job-colors" class="color-row"></div>
+        </label>
+        <div class="dialog-buttons">
+          <button type="button" class="ghost" id="job-cancel">Cancel</button>
+          <button type="submit" class="accent" id="job-save">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="entry-dialog">
+      <form method="dialog" id="entry-form">
+        <h2 id="entry-dialog-title">Add entry</h2>
+        <label>Start
+          <input id="entry-start" type="datetime-local" required step="60" />
+        </label>
+        <label>End
+          <input id="entry-end" type="datetime-local" required step="60" />
+        </label>
+        <label>Note
+          <input id="entry-note" type="text" maxlength="200" placeholder="What did you work on?" />
+        </label>
+        <p id="entry-error" class="error" hidden>End must be after start.</p>
+        <div class="dialog-buttons">
+          <button type="button" class="ghost" id="entry-cancel">Cancel</button>
+          <button type="submit" class="accent">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="settings-dialog">
+      <form method="dialog">
+        <h2>Settings</h2>
+        <label>Theme
+          <select id="setting-theme">
+            <option value="dark">Dark</option>
+            <option value="midnight">Midnight</option>
+            <option value="nord">Nord</option>
+            <option value="light">Light</option>
+            <option value="sepia">Sepia</option>
+          </select>
+        </label>
+        <label>Accent color
+          <input id="setting-accent" type="color" value="#57ab5a" />
+        </label>
+        <label>Currency symbol
+          <input id="setting-currency" type="text" maxlength="4" value="$" />
+        </label>
+        <div class="settings-footer">
+          <button type="button" class="ghost" id="open-data-folder" title="Show the JSON data file on disk">Open data folder</button>
+          <button type="submit" class="accent">Done</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="../dist/renderer/renderer.js"></script>
+  </body>
+</html>

@@ -31,7 +31,10 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("open-data-folder", async () => {
-    shell.showItemInFolder(dataFilePath());
+    // shell.showItemInFolder gives no feedback and can fail silently on
+    // Windows; openPath reports an error string we can surface.
+    const error = await shell.openPath(path.dirname(dataFilePath()));
+    return error ? { ok: false as const, error } : { ok: true as const };
   });
 
   createWindow();

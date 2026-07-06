@@ -38,7 +38,7 @@ interface Window {
   hours: {
     loadData: () => Promise<unknown>;
     saveData: (data: AppData) => Promise<{ ok: boolean; error?: string }>;
-    openDataFolder: () => Promise<void>;
+    openDataFolder: () => Promise<{ ok: boolean; error?: string }>;
   };
 }
 
@@ -513,7 +513,10 @@ function wireDialogs() {
       data.settings.currency = ($("setting-currency") as HTMLInputElement).value || "$";
     });
   });
-  $("open-data-folder").addEventListener("click", () => window.hours.openDataFolder());
+  $("open-data-folder").addEventListener("click", async () => {
+    const result = await window.hours.openDataFolder();
+    if (!result.ok) alert(`Could not open the data folder: ${result.error ?? "unknown error"}`);
+  });
 }
 
 // ---------- init ----------

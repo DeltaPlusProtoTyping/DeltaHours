@@ -1,6 +1,6 @@
 {
   "name": "deltahours",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Track billable hours per job — autosaved to JSON, adjustable themes",
   "main": "dist/main/main.js",
   "author": "DeltaPlusProtoTyping",

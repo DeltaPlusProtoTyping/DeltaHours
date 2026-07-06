@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain, shell } from "electron";
+import { spawn } from "child_process";
 import * as path from "path";
 import { dataFilePath, loadData, saveData } from "./store";
 
@@ -30,10 +31,17 @@ app.whenReady().then(() => {
     }
   });
 
+  ipcMain.handle("get-data-path", async () => dataFilePath());
+
   ipcMain.handle("open-data-folder", async () => {
-    // shell.showItemInFolder gives no feedback and can fail silently on
-    // Windows; openPath reports an error string we can surface.
-    const error = await shell.openPath(path.dirname(dataFilePath()));
+    const file = dataFilePath();
+    if (process.platform === "win32") {
+      // Open Explorer with the data file pre-selected so it stands out from
+      // the Electron cache folders that share the userData directory.
+      spawn("explorer.exe", ["/select,", file], { detached: true }).unref();
+      return { ok: true as const };
+    }
+    const error = await shell.openPath(path.dirname(file));
     return error ? { ok: false as const, error } : { ok: true as const };
   });
 

@@ -39,6 +39,7 @@ interface Window {
     loadData: () => Promise<unknown>;
     saveData: (data: AppData) => Promise<{ ok: boolean; error?: string }>;
     openDataFolder: () => Promise<{ ok: boolean; error?: string }>;
+    getDataPath: () => Promise<string>;
   };
 }
 
@@ -494,6 +495,9 @@ function wireDialogs() {
     ($("setting-theme") as HTMLSelectElement).value = data.settings.theme;
     ($("setting-accent") as HTMLInputElement).value = data.settings.accent;
     ($("setting-currency") as HTMLInputElement).value = data.settings.currency;
+    void window.hours.getDataPath().then((p) => {
+      $("data-path").textContent = p;
+    });
     settingsDialog.showModal();
   });
   $("setting-theme").addEventListener("change", () => {

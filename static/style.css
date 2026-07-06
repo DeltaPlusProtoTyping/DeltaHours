@@ -497,6 +497,18 @@ dialog label {
   margin: 0;
 }
 
+.data-path {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text);
+  word-break: break-all;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  user-select: text;
+}
+
 input[type="color"] {
   width: 60px;
   height: 32px;
